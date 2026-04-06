@@ -1,8 +1,13 @@
 import requests
 from lxml import etree
+from BdMongo import insert_articles
 
 def fetch(url: str):
-    response = requests.get(url)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+        
+    response = requests.get(url, headers=headers)
     return response.content
 
 def setup_namespaces(root):
@@ -27,18 +32,27 @@ def parse(url: str):
         news = url.xpath("news:news", namespaces=namespaces)[0]
         
         title = news.xpath("news:title/text()", namespaces=namespaces)[0]
-        keywords = news.xpath("news:keywords/text()", namespaces=namespaces)[0]
         publication_date = news.xpath("news:publication_date/text()", namespaces=namespaces)[0]
 
+        origin = news.xpath("news:publication/news:name/text()", namespaces=namespaces)[0]
+
         article = {
-            loc: loc,
-            title: title,
-            keywords: keywords.split(", "),
-            publication_date: publication_date
-        }        
+            "loc": loc,
+            "title": title,
+            "origin": origin,
+            "publication_date": publication_date
+        }
 
         result.append(article)
 
     return result
 
-print(parse("https://www.lefigaro.fr/sitemap_news.xml"))
+urls = [
+    "https://www.lemonde.fr/sitemap_news.xml",
+    "https://www.lefigaro.fr/sitemap_news.xml",
+    "https://www.lesechos.fr/sitemap_news.xml",
+]
+
+for url in urls:
+    result = parse(url)
+    insert_articles(result)
