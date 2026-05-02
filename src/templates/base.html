@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+      <meta charset="UTF-8">
+      <title>Sitemap Project</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+      <nav>
+          <a class="{% if page == 'consultation' %}active{% endif %}" href="/consultation">Consultation</a>
+          <a class="{% if page == 'admin' %}active{% endif %}" href="/admin">Administration</a>
+      </nav>
+
+      <div>
+        {% block content %}{% endblock %}
+      </div>
+  </body>
+</html>

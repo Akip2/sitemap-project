@@ -11,4 +11,9 @@ def get_collection(name):
 
 def insert_articles(articles):
     article_collection = get_collection("articles")
-    article_collection.insert_many(articles)
+    for article in articles:
+        article_collection.update_one(
+            {"loc": article["loc"]},
+            {"$set": article},
+            upsert=True
+        )
