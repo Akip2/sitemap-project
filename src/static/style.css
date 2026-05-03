@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    a {
+        text-decoration: none;
+        border-bottom: 3px solid transparent;
+        transition: color 0.15s, border-color 0.15s;
+
+        color: gray;
+        padding: 0.5em 1.4em;
+    }
+
+    a:hover {
+        color: #7ab0e8;
+    }
+
+    a.active {
+        color: #e8f4ff;
+        border-bottom: 3px solid #3b82f6;
+    }
+}
+
+#mainnav {
+    font-size: 25px;
+    font-weight: 600;
+    padding: 1em 2em;
+    background: #0749ad;
+    border-bottom: 1px solid #0d2340;
+}
+
+#subnav {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0.125em 2em;
+    background: #213f80;
+    border-bottom: 1px solid #0d2340;
+}

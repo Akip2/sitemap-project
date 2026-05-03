@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <nav>
+    <nav id="subnav">
         <a class="{% if subpage == 'list' %}active{% endif %}" href="/list" href="/list">Liste</a>
         <a class="{% if subpage == 'cloud' %}active{% endif %}" href="/cloud" href="/cloud">Nuage</a>
     </nav>
