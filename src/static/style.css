@@ -43,3 +43,60 @@ nav {
     background: #213f80;
     border-bottom: 1px solid #0d2340;
 }
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    padding: 2em;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#filter {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    border: 1px solid #ccc;
+    padding: 1em;
+
+    button {
+        padding: 0.75em 1em;
+        border-radius: 4px;
+        border: none;
+        background: #3b82f6;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #2563eb;
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+
+    label {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    input {
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+}

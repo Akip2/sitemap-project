@@ -17,3 +17,10 @@ def insert_articles(articles):
             {"$set": article},
             upsert=True
         )
+
+def get_articles():
+    collection = get_collection("articles")
+
+    filter = {}
+
+    return collection.find(filter)
