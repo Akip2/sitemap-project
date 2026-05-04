@@ -59,9 +59,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1em;
-
-    border: 1px solid #ccc;
-    padding: 1em;
+    background: #f8faff;
+    border: 1px solid #ccddf5;
+    border-radius: 10px;
+    padding: 1.25em 1.5em;
 
     button {
         padding: 0.75em 1em;
@@ -69,7 +70,6 @@ main {
         border: none;
         background: #3b82f6;
         color: white;
-        font-weight: 500;
         cursor: pointer;
     }
 
@@ -104,11 +104,36 @@ main {
 #article-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .article {
-    border: solid 1px black;
-    max-width: 500px;
-    padding: 1em;
+    background: #f0f6ff;
+    border: 1px solid #ccddf5;
+    border-radius: 8px;
+    padding: 0.9em 1em;
+    transition: border-color 0.15s, background 0.15s;
+
+    a {
+        color: #1a5ca8;
+        text-decoration: none;
+        font-size: medium;
+        line-height: 1.5;
+        display: block;
+    }
+
+    a:hover {
+        color: #3b82f6;
+    }
+
+    .meta {
+        font-size: small;
+        color: #7aaad0;
+        margin-top: 0.4em;
+    }
+}
+
+.article:hover {
+    background: #e3eeff;
+    border-color: #3b82f6;
 }
