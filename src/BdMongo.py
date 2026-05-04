@@ -18,9 +18,22 @@ def insert_articles(articles):
             upsert=True
         )
 
-def get_articles():
+def get_articles(origin, date_start, date_end, keywords):
     collection = get_collection("articles")
 
     filter = {}
+
+    if(origin != None):
+        filter["origin"] = origin
+
+    if(keywords != None):
+        filter["title"] = {"$regex": "|".join(keywords), "$options": "i"}
+
+    if(date_start != None) or (date_end != None):
+        filter["publication_date"] = {}
+        if date_start != None:
+            filter["publication_date"]["$gte"] = date_start
+        if date_end != None:
+            filter["publication_date"]["$lte"] = date_end
 
     return list(collection.find(filter, {"_id": 0}))

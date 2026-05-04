@@ -8,7 +8,7 @@ searchButton.addEventListener("click", async () => {
     const dateEnd = document.getElementById("date-end").value;
     const keywords = document.getElementById("keywords").value.trim().split(" ");
 
-    const response = await fetch("/api/articles");
+    const response = await fetch(`/api/articles?origin=${source}&date_start=${dateStart}&date_end=${dateEnd}&keywords=${keywords.join(",")}`);
     const articles = await response.json();
 
     displayArticles(articles);
