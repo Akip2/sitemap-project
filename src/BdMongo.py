@@ -23,4 +23,4 @@ def get_articles():
 
     filter = {}
 
-    return collection.find(filter)
+    return list(collection.find(filter, {"_id": 0}))

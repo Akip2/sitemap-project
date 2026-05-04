@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from BdMongo import get_articles
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -16,5 +16,11 @@ def cloud():
 @app.route("/admin")
 def admin():
     return render_template("admin.html", page="admin")
+
+#API ROUTES TO GET DATA
+@app.route("/api/articles")
+def api_articles():
+    articles = get_articles()
+    return jsonify(articles)
 
 app.run(debug=True)

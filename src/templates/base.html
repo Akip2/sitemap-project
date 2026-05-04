@@ -6,12 +6,12 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
-    {% block script %}{% endblock %}   
       <nav id="mainnav">
           <a class="{% if page == 'consultation' %}active{% endif %}" href="/consultation">Consultation</a>
           <a class="{% if page == 'admin' %}active{% endif %}" href="/admin">Administration</a>
       </nav>
 
       {% block content %}{% endblock %}
+      {% block script %}{% endblock %}   
   </body>
 </html>

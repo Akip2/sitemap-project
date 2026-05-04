@@ -100,3 +100,15 @@ main {
         border: 1px solid #ccc;
     }
 }
+
+#article-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.article {
+    border: solid 1px black;
+    max-width: 500px;
+    padding: 1em;
+}

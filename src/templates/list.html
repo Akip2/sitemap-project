@@ -1,7 +1,7 @@
 {% extends "base-consultation.html" %}
 
 {% block script %}
-  <script src="{{ url_for('static', filename='list.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='list.js') }}"></script>
 {% endblock %}
 
 {% block subcontent %}
@@ -25,8 +25,8 @@
         </div>
 
         <div class="input-block">
-          <label for="keyword">Mots-clés:</label>
-          <input type="text" id="keyword" name="keyword" placeholder="économie">
+          <label for="keywords">Mots-clés:</label>
+          <input type="text" id="keywords" name="keywords" placeholder="économie">
         </div>
       </div>
 
