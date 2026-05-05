@@ -1,7 +1,9 @@
+import time
+
 from flask import Flask, render_template, jsonify, request
-from BdMongo import get_articles, insert_source, get_sources
+from BdMongo import get_articles, insert_source, get_sources, insert_articles
 from utils import treat_str_input, trear_array_input
-from sitemap_parser import get_source_name
+from sitemap_parser import get_source_name, parse
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -35,13 +37,19 @@ def api_sources():
     if(request.method == "POST"):
         json = request.get_json()
         url = json.get("url")
+        time_interval = json.get("time_interval")
 
         try:
             name = get_source_name(url)
 
+            articles = parse(name, url)
+            insert_articles(articles)
+
             source = {
                 "name": name,
-                "url": url
+                "url": url,
+                "last_update": time.time(),
+                "time_interval": time_interval
             }
             insert_source(source)
             

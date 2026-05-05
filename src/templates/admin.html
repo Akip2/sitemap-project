@@ -9,9 +9,24 @@
     <div class="card">
         <h2>Ajouter une source</h2>
         <form>
-            <div class="input-block">
-                <label for="url">URL du sitemap</label>
-                <input required ="text" name="url" id="url" placeholder="https://journal/sitemap_news.xml" />
+            <div class="input-group">
+                <div class="input-block">
+                    <label for="url">URL du sitemap</label>
+                    <input required ="text" name="url" id="url" placeholder="https://journal/sitemap_news.xml" />
+                </div>
+                <div class="input-block">
+                    <label for="interval">Intervalle de mise à jour</label>
+                    <input type="number" name="interval" id="interval" value="1" min="1" />
+                </div>
+
+                <div class="input-block">
+                    <label for="unit">Unité</label>
+                    <select name="unit" id="unit">
+                        <option value="minutes">Minutes</option>
+                        <option selected value="hours">Heures</option>
+                        <option value="days">Jours</option>
+                    </select>
+                </div>
             </div>
             <button type="button" id="add-source-btn">Ajouter</button>
         </form>
@@ -20,24 +35,6 @@
     <div class="card">
         <h2>Sources abonnées</h2>
         <div id="source-list"></div>
-    </div>
-
-    <div class="card">
-        <h2>Minuterie</h2>
-        <form class="input-group" method="POST" action="/admin/timer">
-            <div class="input-block">
-                <label for="interval">Intervalle</label>
-                <input type="number" name="interval" id="interval" value="6" min="1" />
-            </div>
-            <div class="input-block">
-                <label for="unit">Unité</label>
-                <select name="unit" id="unit">
-                    <option value="hours">Heures</option>
-                    <option value="days">Jours</option>
-                </select>
-            </div>
-            <button type="submit">Enregistrer</button>
-        </form>
     </div>
 </main>
 {% endblock %}

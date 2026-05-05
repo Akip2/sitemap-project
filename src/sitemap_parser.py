@@ -25,13 +25,12 @@ def get_source_name(url: str):
     origin = root.xpath("//news:publication/news:name/text()", namespaces=namespaces)[0]
     return origin
 
-def parse(url: str):
+def parse(origin: str, url: str):
     xml_content = fetch(url)
     root = etree.fromstring(xml_content)
     namespaces = setup_namespaces(root)
 
     urls = root.xpath("//ns:url", namespaces=namespaces)
-    origin = root.xpath("//news:publication/news:name/text()", namespaces=namespaces)[0]
 
     result = []
     
@@ -54,13 +53,13 @@ def parse(url: str):
 
     return result
 
-urls = [
-    "https://www.lemonde.fr/sitemap_news.xml",
-    "https://www.lefigaro.fr/sitemap_news.xml",
-    "https://www.lesechos.fr/sitemap_news.xml",
-]
-
 if(__name__ == "__main__"):
+    urls = [
+        "https://www.lemonde.fr/sitemap_news.xml",
+        "https://www.lefigaro.fr/sitemap_news.xml",
+        "https://www.lesechos.fr/sitemap_news.xml",
+    ]
+
     for url in urls:
-        result = parse(url)
+        result = parse("", url)
         insert_articles(result)

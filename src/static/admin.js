@@ -11,6 +11,29 @@ async function updateSourceContainer() {
 
 addSourceButton.addEventListener("click", async () => {
     const url = document.getElementById("url").value.trim();
+    const interval = document.getElementById("interval").value.trim();
+    const timeUnit = document.getElementById("unit").value;
+
+    if(url.length === 0 || interval.length === 0) {
+        alert("Veuillez remplir tous les champs");
+        return;
+    } else if(isNaN(interval) || parseInt(interval) <= 0) {
+        alert("L'intervalle doit être un nombre entier positif");
+        return;
+    }
+
+    let timeCoef;
+    switch (timeUnit) {
+        case "minutes":
+            timeCoef = 60;
+            break;
+        case "hours":
+            timeCoef = 3600;
+            break;
+        case "days":
+            timeCoef = 86400;
+            break;
+    }
 
     const response = await fetch("/api/sources", {
         method: "POST",
@@ -18,7 +41,8 @@ addSourceButton.addEventListener("click", async () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "url": url
+            "url": url,
+            "time_interval": parseInt(interval) * timeCoef
         })
     });
 
