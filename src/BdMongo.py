@@ -18,6 +18,19 @@ def insert_articles(articles):
             upsert=True
         )
 
+def insert_source(source):
+    sources = get_collection("sources")
+    sources.update_one(
+        {"name": source["name"]},
+        {"$set": source},
+        upsert=True
+    )
+
+def get_sources():
+    sources = get_collection("sources")
+
+    return list(sources.find())
+
 def get_articles(origin, date_start, date_end, keywords):
     collection = get_collection("articles")
 

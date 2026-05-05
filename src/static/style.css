@@ -55,7 +55,7 @@ main {
     justify-content: center;
 }
 
-#filter {
+.card {
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -136,4 +136,10 @@ main {
 .article:hover {
     background: #e3eeff;
     border-color: #3b82f6;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
