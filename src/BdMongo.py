@@ -29,7 +29,7 @@ def insert_source(source):
 def get_sources():
     sources = get_collection("sources")
 
-    return list(sources.find())
+    return list(sources.find({}, {"_id": 0}))
 
 def get_articles(origin, date_start, date_end, keywords):
     collection = get_collection("articles")

@@ -19,14 +19,7 @@
 
     <div class="card">
         <h2>Sources abonnées</h2>
-        {% for source in sources %}
-        <div class="input-group">
-            <span class="input-block">{{ source.url }}</span>
-            <form method="POST" action="/admin/delete/{{ source._id }}">
-                <button type="submit">Supprimer</button>
-            </form>
-        </div>
-        {% endfor %}
+        <div id="source-list"></div>
     </div>
 
     <div class="card">
