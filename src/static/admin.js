@@ -1,3 +1,5 @@
+import { formatTimestamp } from "./utils.js";
+
 const addSourceButton = document.getElementById("add-source-btn");
 const sourceContainer = document.getElementById("source-list");
 
@@ -5,7 +7,14 @@ async function updateSourceContainer() {
     const response = await fetch("/api/sources");
     const sources = await response.json();
 
-    const content = sources.map((source) => `<div><a href=${source.url}>${source.name}</a>`).join("");
+    const content = sources.map((source) =>
+        `
+        <div class='source'>
+            <a href=${source.url}>${source.name}</a>
+            <div class="meta"><b>Dernière update</b>: ${formatTimestamp(source.last_update)}</div>
+            <div class="meta"><b>Prochaine update</b>: ${formatTimestamp(source.last_update + source.time_interval)}</div>
+        </div>
+        `).join("");
     sourceContainer.innerHTML = content;
 }
 
@@ -14,10 +23,10 @@ addSourceButton.addEventListener("click", async () => {
     const interval = document.getElementById("interval").value.trim();
     const timeUnit = document.getElementById("unit").value;
 
-    if(url.length === 0 || interval.length === 0) {
+    if (url.length === 0 || interval.length === 0) {
         alert("Veuillez remplir tous les champs");
         return;
-    } else if(isNaN(interval) || parseInt(interval) <= 0) {
+    } else if (isNaN(interval) || parseInt(interval) <= 0) {
         alert("L'intervalle doit être un nombre entier positif");
         return;
     }
@@ -46,7 +55,7 @@ addSourceButton.addEventListener("click", async () => {
         })
     });
 
-    if(response.status === 200) {
+    if (response.status === 200) {
         updateSourceContainer();
     }
 });

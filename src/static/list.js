@@ -1,6 +1,23 @@
-import { displayArticles } from "./utils.js";
+import { setupSourceSelect } from "./utils.js";
 
 const searchButton = document.getElementById("search-btn");
+const articleContainer = document.getElementById("article-list");
+
+const sourceSelect = document.getElementById("source");
+setupSourceSelect(sourceSelect);
+
+function displayArticles(articles) {
+    articleContainer.innerHTML = "";
+
+    const content = articles.map((article) =>
+        `<div class='article'>
+            <a href=${article["loc"]}>${article["title"]}</a>
+            <div class="meta">${article["origin"]} - ${article["publication_date"]}</div>
+        </div>`
+    ).join("");
+
+    articleContainer.innerHTML = content;
+}
 
 searchButton.addEventListener("click", async () => {
     const source = document.getElementById("source").value.trim();

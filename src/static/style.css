@@ -64,8 +64,6 @@ main {
     border-radius: 10px;
     padding: 1.25em 1.5em;
 
-    min-width: 35%;
-
     button {
         padding: 0.75em 1em;
         border-radius: 4px;
@@ -111,7 +109,7 @@ main {
     gap: 0.75rem;
 }
 
-.article {
+.article, .source {
     background: #f0f6ff;
     border: 1px solid #ccddf5;
     border-radius: 8px;
@@ -132,7 +130,7 @@ main {
 
     .meta {
         font-size: small;
-        color: #7aaad0;
+        color: #517999;
         margin-top: 0.4em;
     }
 }
