@@ -11,6 +11,19 @@ export function formatTimestamp(ts) {
     return `${hours}:${minutes} ${day}/${month}/${year}`;
 }
 
+export function formatISODate(isoString) {
+    const date = new Date(isoString);
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
+
+    return `${day}/${month}/${year} ${hours}:${minutes} `;
+}
+
 export async function setupSourceSelect(select) {
     const response = await fetch("/api/sources");
     const sources = await response.json();

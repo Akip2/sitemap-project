@@ -1,7 +1,7 @@
 import time
 
 from flask import Flask, render_template, jsonify, request
-from BdMongo import get_articles, insert_source, get_sources, insert_articles
+from BdMongo import get_articles, insert_source, get_sources, insert_articles, delete_source, delete_articles_from_source
 from utils import treat_str_input, trear_array_input
 from sitemap_parser import get_source_name, parse
 
@@ -60,6 +60,12 @@ def api_sources():
     elif(request.method == "GET"):
         sources = get_sources()
         return jsonify(sources)
+
+@app.route("/api/sources/<name>", methods=["DELETE"])
+def api_sources_delete(name):
+    delete_source(name)
+    delete_articles_from_source(name)
     
+    return {"message": "Source supprimée"}, 200
 
 app.run(debug=True)

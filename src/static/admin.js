@@ -2,19 +2,44 @@ import { formatTimestamp } from "./utils.js";
 
 const addSourceButton = document.getElementById("add-source-btn");
 const sourceContainer = document.getElementById("source-list");
+sourceContainer.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.classList.contains("delete-btn")) {
+        deleteSource(target.id);
+    }
+});
+
+async function deleteSource(sourceName) {
+    const response = await fetch(`/api/sources/${sourceName}`, {
+        method: "DELETE"
+    });
+
+    if (response.status === 200) {
+        updateSourceContainer();
+    }
+}
 
 async function updateSourceContainer() {
     const response = await fetch("/api/sources");
     const sources = await response.json();
 
-    const content = sources.map((source) =>
-        `
+    let content
+    if (sources.length > 0) {
+        content = sources.map((source) =>
+            `
         <div class='source'>
-            <a href=${source.url}>${source.name}</a>
-            <div class="meta"><b>Dernière update</b>: ${formatTimestamp(source.last_update)}</div>
-            <div class="meta"><b>Prochaine update</b>: ${formatTimestamp(source.last_update + source.time_interval)}</div>
+            <div>
+                <a href=${source.url}>${source.name}</a>
+                <div class="meta"><b>Dernière update</b>: ${formatTimestamp(source.last_update)}</div>
+                <div class="meta"><b>Prochaine update</b>: ${formatTimestamp(source.last_update + source.time_interval)}</div>
+            </div>
+            <button class="delete-btn" id="${source.name}">Se désabonner</button>
         </div>
         `).join("");
+    } else {
+        content = "<p>Aucun abonnement</p>";
+    }
+
     sourceContainer.innerHTML = content;
 }
 

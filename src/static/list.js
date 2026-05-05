@@ -1,4 +1,4 @@
-import { setupSourceSelect } from "./utils.js";
+import { setupSourceSelect, formatISODate } from "./utils.js";
 
 const searchButton = document.getElementById("search-btn");
 const articleContainer = document.getElementById("article-list");
@@ -12,7 +12,7 @@ function displayArticles(articles) {
     const content = articles.map((article) =>
         `<div class='article'>
             <a href=${article["loc"]}>${article["title"]}</a>
-            <div class="meta">${article["origin"]} - ${article["publication_date"]}</div>
+            <div class="meta">${article["origin"]} - ${formatISODate(article["publication_date"])}</div>
         </div>`
     ).join("");
 

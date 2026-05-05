@@ -19,20 +19,28 @@ def insert_articles(articles):
         )
 
 def insert_source(source):
-    sources = get_collection("sources")
-    sources.update_one(
+    sources_collection = get_collection("sources")
+    sources_collection.update_one(
         {"name": source["name"]},
         {"$set": source},
         upsert=True
     )
 
 def get_sources():
-    sources = get_collection("sources")
+    sources_collection = get_collection("sources")
 
-    return list(sources.find({}, {"_id": 0}))
+    return list(sources_collection.find({}, {"_id": 0}))
+
+def delete_source(name):
+    sources_collection = get_collection("sources")
+    sources_collection.delete_one({"name": name})
+
+def delete_articles_from_source(source_name):
+    article_collection = get_collection("articles")
+    article_collection.delete_many({"origin": source_name})    
 
 def get_articles(origin, date_start, date_end, keywords):
-    collection = get_collection("articles")
+    article_collection = get_collection("articles")
 
     filter = {}
 
@@ -49,4 +57,4 @@ def get_articles(origin, date_start, date_end, keywords):
         if date_end != None:
             filter["publication_date"]["$lte"] = date_end
 
-    return list(collection.find(filter, {"_id": 0}))
+    return list(article_collection.find(filter, {"_id": 0}))
