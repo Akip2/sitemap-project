@@ -35,6 +35,10 @@ def delete_source(name):
     sources_collection = get_collection("sources")
     sources_collection.delete_one({"name": name})
 
+def update_source(name, update_time):
+    sources_collection = get_collection("sources")
+    sources_collection.update_one({"name": name}, {"$set": {"last_update": update_time}})
+
 def delete_articles_from_source(source_name):
     article_collection = get_collection("articles")
     article_collection.delete_many({"origin": source_name})    

@@ -1,9 +1,21 @@
 import time
 
 from flask import Flask, render_template, jsonify, request
-from BdMongo import get_articles, insert_source, get_sources, insert_articles, delete_source, delete_articles_from_source
+from BdMongo import get_articles, insert_source, get_sources, update_source, insert_articles, delete_source, delete_articles_from_source
 from utils import treat_str_input, trear_array_input
 from sitemap_parser import get_source_name, parse
+from apscheduler.schedulers.background import BackgroundScheduler
+
+def check_for_updates():
+    sources = get_sources()
+    currentTime = time.time()
+
+    for source in sources:
+        update_time = source["last_update"] + source["time_interval"]
+        if(currentTime >= update_time):
+            articles = parse(source["name"], source["url"])
+            insert_articles(articles)
+            update_source(source["name"], currentTime)
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -68,4 +80,9 @@ def api_sources_delete(name):
     
     return {"message": "Source supprimée"}, 200
 
+scheduler = BackgroundScheduler()
+scheduler.add_job(check_for_updates, 'interval', minutes=1)
+
+check_for_updates()
+scheduler.start()
 app.run(debug=True)
