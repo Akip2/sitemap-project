@@ -1,5 +1,38 @@
 {% extends "base-consultation.html" %}
 
-{% block subcontent %}
-  <p>Nuage, TODO</p>
+{% block script %}
+  <script type="module" src="{{ url_for('static', filename='cloud.js') }}"></script>
 {% endblock %}
+
+{% block subcontent %}
+  <main>
+    <form class="card" id="filter">
+      <h1>Paramètres du nuage</h1>
+      <div class="input-group">
+        <div class="input-block">
+          <label for="source">Source:</label>
+          <select name="source" id="source"></select>
+        </div>
+
+          <div class="input-block">
+          <label for="nb-word">Nombre de mots:</label>
+          <input type="number" id="nb-word" name="nb-word" value=50>
+        </div>
+
+        <div class="input-block">
+          <label for="date-start">De:</label>
+          <input type="date" id="date-start" name="date-start">
+        </div>
+
+        <div class="input-block">
+          <label for="date-end">À:</label>
+          <input type="date" id="date-end" name="date-end">
+        </div>
+      </div>
+
+      <button type="button" id="gen-btn">Générer</button>
+    </form>
+
+    <svg id="cloud"></svg>
+  </main>
+  {% endblock %}
