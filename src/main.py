@@ -7,8 +7,8 @@ from sitemap_parser import get_source_name, parse
 from collections import Counter
 from apscheduler.schedulers.background import BackgroundScheduler
 
-EXCLUDED_WORDS = ["dans", "au", "aux", "il", "elle", "ils", "elles", "nous", "vous", "tu", "je", "pas", "ne", "ma", "mon", "mes", "sur", "sous", "entre", "ses", "sa", "son", "se", "ce", "cette", "cet", "quel", "quelle", "quels", "quelles", "quand", "que", "qui", "quoi", "dont", "comment", "pourquoi" "on", "où", "là", "le", "la", "les", "un", "une", "de", "des", "du", "avec", "or", "pour", "et", "à", "avec", "par"]
-EXCLUDED_CHARS = ["…", ".", ",", "!", "?", ":", ";", "%", "€", "$", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "«", "»", "n’", "l’", "qu’", "d’", "d'", "j’", "m’"]
+EXCLUDED_WORDS = ["e", ".", "près", "ou", "on", "plus", "moins", "…", "chez", "lors", "avant", "après", "pendant", "est", "alors", "leur", "leurs", "sans", "en", "a", "-", "dans", "au", "aux", "il", "elle", "ils", "elles", "nous", "vous", "tu", "je", "pas", "ne", "ma", "mon", "mes", "sur", "sous", "entre", "ses", "sa", "son", "se", "ce", "cette", "cet", "quel", "quelle", "quels", "quelles", "quand", "que", "qui", "quoi", "dont", "comment", "pourquoi" "on", "où", "là", "le", "la", "les", "un", "une", "de", "des", "du", "avec", "or", "pour", "et", "à", "avec", "par"]
+EXCLUDED_CHARS = ["(", ")", "…", ".", ",", "!", "?", ":", ";", "%", "€", "$", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "«", "»", "n’", "n'", "l’", "l'", "qu’", "qu'", "d’", "d'", "j’", "j'", "m’", "m'"]
 
 def get_title_words(title):
     formatted_title = title.replace("\n", " ").replace("/", " ").lower()

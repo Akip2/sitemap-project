@@ -7,10 +7,15 @@ def treat_str_input(input):
 def treat_int_input(input, min=1):
     if(input == None):
         return None
-    elif(input < min):
-        return min
-    else:
-        return input
+    
+    converted = int(input)
+    try:
+        if(converted > min):
+            return converted
+        else:
+            return min
+    except:
+        return None
 
 def trear_array_input(input):
     if(input == None or len(input) == 0):
