@@ -7,7 +7,10 @@ const COLORS = ["#0013ff", "#0066ff", "#07a5df"];
 const sourceSelect = document.getElementById("source");
 setupSourceSelect(sourceSelect);
 
-document.getElementById("gen-btn").addEventListener("click", async () => {
+const generateButton = document.getElementById("gen-btn");
+const downloadButton = document.getElementById("download-btn");
+
+generateButton.addEventListener("click", async () => {
     const source = document.getElementById("source").value.trim();
     const dateStart = document.getElementById("date-start").value;
     const dateEnd = document.getElementById("date-end").value;
@@ -21,6 +24,24 @@ document.getElementById("gen-btn").addEventListener("click", async () => {
     const response = await fetch(`/api/wordcloud?origin=${source}&date_start=${dateStart}&date_end=${dateEnd}&nb_word=${nbWord}`);
     const words = await response.json();
     displayWordCloud(words);
+});
+
+downloadButton.addEventListener("click", () => {  // code inspiré par https://gist.github.com/neznayer/f40e3665f1d5218ce30619f7a57e25aa  
+    const svgElement = document.getElementById("cloud").querySelector("svg");
+    const serializer = new XMLSerializer();
+    let source = serializer.serializeToString(svgElement);
+
+    if (!source.match(/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/)) {
+        source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+
+    const preface = '<?xml version="1.0" encoding="UTF-8"?>\r\n';
+    const blob = new Blob([preface, source], { type: "image/svg+xml" });
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "cloud.svg";
+    a.click();
 });
 
 function getFontSize(freq, minFreq, maxFreq) {

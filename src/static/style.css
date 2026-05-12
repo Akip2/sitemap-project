@@ -174,3 +174,8 @@ svg {
     height: 100%;
     background-color: cyan;
 }
+
+#download-btn {
+    max-width: 400px;
+    align-self: center;
+}
