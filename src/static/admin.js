@@ -2,6 +2,8 @@ import { formatTimestamp } from "./utils.js";
 
 const addSourceButton = document.getElementById("add-source-btn");
 const sourceContainer = document.getElementById("source-list");
+const errorMessage = document.getElementById("error-message");
+
 sourceContainer.addEventListener("click", (e) => {
     const target = e.target;
     if (target.classList.contains("delete-btn")) {
@@ -82,6 +84,11 @@ addSourceButton.addEventListener("click", async () => {
 
     if (response.status === 200) {
         updateSourceContainer();
+        document.getElementById("url").value = "";
+        document.getElementById("interval").value = "1";
+    } else {
+        const data = await response.json();
+        alert(data.message || "Erreur lors de l'ajout de la source");
     }
 });
 
