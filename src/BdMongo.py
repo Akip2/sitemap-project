@@ -3,6 +3,12 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 database = client.get_database("SD2026_projet")
 
+def set_up_indexes():
+    article_collection = get_collection("articles")
+
+    article_collection.create_index({"origin": 1})
+    article_collection.create_index({"publication_date": 1})
+
 def generate_prefixed_collection_name(name):
     return "G_FFST_"+name
 
@@ -62,3 +68,5 @@ def get_articles(origin, date_start, date_end, keywords):
             filter["publication_date"]["$lte"] = date_end
 
     return list(article_collection.find(filter, {"_id": 0}))
+
+set_up_indexes()
