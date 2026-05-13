@@ -37,6 +37,9 @@ def parse(origin: str, url: str):
     for url in urls:
         loc = url.xpath("ns:loc/text()", namespaces=namespaces)[0]
         
+        image_loc = url.xpath("image:image/image:loc/text()", namespaces=namespaces)
+        image_loc = image_loc[0] if image_loc else None
+        
         news = url.xpath("news:news", namespaces=namespaces)[0]
         
         title = news.xpath("news:title/text()", namespaces=namespaces)[0]
@@ -44,6 +47,7 @@ def parse(origin: str, url: str):
 
         article = {
             "loc": loc,
+            "image_loc": image_loc,
             "title": title,
             "origin": origin,
             "publication_date": publication_date

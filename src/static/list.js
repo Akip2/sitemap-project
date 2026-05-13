@@ -12,6 +12,7 @@ function displayArticles(articles) {
     const content = articles.map((article) =>
         `<div class='article'>
             <a href=${article["loc"]}>${article["title"]}</a>
+            ${article["image_loc"] ? `<img src="${article["image_loc"]}"/>` : ""}
             <div class="meta">${article["origin"]} - ${formatISODate(article["publication_date"])}</div>
         </div>`
     ).join("");
