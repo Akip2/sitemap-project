@@ -1,7 +1,7 @@
 import { setupSourceSelect } from "./utils.js";
 
-const WIDTH = 800;
-const HEIGHT = 400;
+const WIDTH = 900;
+const HEIGHT = 500;
 const COLORS = ["#0013ff", "#0066ff", "#07a5df"];
 
 const sourceSelect = document.getElementById("source");

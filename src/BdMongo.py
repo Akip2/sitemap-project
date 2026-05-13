@@ -67,6 +67,6 @@ def get_articles(origin, date_start, date_end, keywords):
         if date_end != None:
             filter["publication_date"]["$lte"] = date_end
 
-    return list(article_collection.find(filter, {"_id": 0}))
+    return list(article_collection.find(filter, {"_id": 0}).sort("publication_date", -1))
 
 set_up_indexes()
