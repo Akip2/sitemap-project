@@ -1,7 +1,7 @@
 import time
 
 from flask import Flask, render_template, jsonify, request
-from BdMongo import get_articles, insert_source, get_sources, update_source, insert_articles, delete_source, delete_articles_from_source
+from BdMongo import get_articles, insert_source, get_sources, update_source, insert_articles, delete_source, delete_articles_from_source, update_consultation
 from utils import treat_int_input, treat_str_input, trear_array_input
 from sitemap_parser import get_source_name, parse
 from collections import Counter
@@ -61,8 +61,10 @@ def api_articles():
     keywords = trear_array_input(request.args.get("keywords"))
     date_start = treat_str_input(request.args.get("date_start"))
     date_end = treat_str_input(request.args.get("date_end"))
+    consultation_date = treat_str_input(request.args.get("consultation_date"))
+    consultation_time = treat_str_input(request.args.get("consultation_time"))
 
-    articles = get_articles(origin, date_start, date_end, keywords)
+    articles = get_articles(origin, date_start, date_end, keywords, consultation_date, consultation_time)
     return jsonify(articles)
 
 @app.route("/api/sources", methods=["POST", "GET"])
@@ -98,8 +100,15 @@ def api_sources():
 def api_sources_delete(name):
     delete_source(name)
     delete_articles_from_source(name)
+
+@app.route("/api/consultations", methods=["POST"])
+def api_consultations():
+    json = request.get_json()
+    loc = json.get("loc")
+    timestamp = json.get("timestamp")
+    update_consultation(loc, timestamp)
     
-    return {"message": "Source supprimée"}, 200
+    return {"message": "Consultation enregistrée"}, 200
 
 @app.route("/api/wordcloud")
 def api_wordcloud():

@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from datetime import datetime
 
 client = MongoClient('localhost', 27017)
 database = client.get_database("SD2026_projet")
@@ -8,6 +9,7 @@ def set_up_indexes():
 
     article_collection.create_index({"origin": 1})
     article_collection.create_index({"publication_date": 1})
+    article_collection.create_index({"last_consultation": 1})
 
 def generate_prefixed_collection_name(name):
     return "G_FFST_"+name
@@ -49,7 +51,14 @@ def delete_articles_from_source(source_name):
     article_collection = get_collection("articles")
     article_collection.delete_many({"origin": source_name})    
 
-def get_articles(origin, date_start, date_end, keywords):
+def update_consultation(loc, timestamp):
+    article_collection = get_collection("articles")
+    article_collection.update_one(
+        {"loc": loc},
+        {"$set": {"last_consultation": timestamp}}
+    )
+
+def get_articles(origin, date_start, date_end, keywords, consultation_date=None, consultation_time=None):
     article_collection = get_collection("articles")
 
     filter = {}
@@ -66,6 +75,22 @@ def get_articles(origin, date_start, date_end, keywords):
             filter["publication_date"]["$gte"] = date_start
         if date_end != None:
             filter["publication_date"]["$lte"] = date_end
+
+    if consultation_date or consultation_time:
+        conditions = []
+        if consultation_date:
+            start_dt = datetime.strptime(consultation_date, '%Y-%m-%d')
+            start_ts = start_dt.timestamp()
+            end_ts = start_ts + 86400
+            conditions.append({"last_consultation": {"$gte": start_ts, "$lt": end_ts}})
+        if consultation_time:
+            h, m = map(int, consultation_time.split(':'))
+            offset = h * 3600 + m * 60
+            conditions.append({"$expr": {"$eq": [{"$mod": ["$last_consultation", 86400]}, offset]}})
+        if len(conditions) == 1:
+            filter.update(conditions[0])
+        else:
+            filter["$and"] = conditions
 
     return list(article_collection.find(filter, {"_id": 0}).sort("publication_date", -1))
 
